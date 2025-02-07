@@ -78,7 +78,25 @@ class ImageClassifierApp:
                 if self.classifier.classify_current_image(class_number):
                     self.show_next_image()
 
-if __name__ == "__main__":
+def main():
     root = tk.Tk()
+    root.title("Image Classifier")
+    
+    # Set fixed window size (width x height in pixels)
+    window_width = 800
+    window_height = 900
+    root.geometry(f"{window_width}x{window_height}")
+    root.resizable(False, False)  # Prevent window resizing
+    
+    # Center window on screen
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    x = (screen_width - window_width) // 2
+    y = (screen_height - window_height) // 2
+    root.geometry(f"+{x}+{y}")
+    
     app = ImageClassifierApp(root)
     root.mainloop()
+
+if __name__ == "__main__":
+    main()

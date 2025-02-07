@@ -42,7 +42,6 @@ class ImageClassifier:
             writer = csv.writer(csvfile)
             writer.writerow(['filename', 'class'])
             for filename, class_data in self.classifications.items():
-                # class_data is a tuple of (shortcut, name), we only want the name
                 writer.writerow([filename, class_data[1]])
         return output_file
 
