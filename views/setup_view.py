@@ -8,9 +8,11 @@ class SetupView(ttk.Frame):
         
         # Center container
         center_frame = ttk.Frame(self)
-        center_frame.grid(row=0, column=0)
-        self.grid_columnconfigure(0, weight=1)  # Center horizontally
-        self.grid_rowconfigure(0, weight=1)     # Center vertically
+        center_frame.grid(row=0, column=0, sticky=(tk.N, tk.S))
+        
+        # Configure grid weights
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
         
         # Class entry
         class_frame = ttk.LabelFrame(center_frame, text="Add New Class", padding="10")
@@ -43,9 +45,19 @@ class SetupView(ttk.Frame):
         remove_button = ttk.Button(list_frame, text="Remove Selected", command=self.remove_selected, width=20)
         remove_button.grid(row=1, column=0, columnspan=2, pady=10)
 
-        # Folder selection frame
-        folder_frame = ttk.LabelFrame(center_frame, text="Image Folder", padding="10")
-        folder_frame.grid(row=2, column=0, pady=10)
+        # Add skip classified checkbox before the folder selection
+        self.skip_classified = tk.BooleanVar(value=False)
+        skip_frame = ttk.Frame(center_frame)
+        skip_frame.grid(row=2, column=0, pady=5)
+        
+        skip_checkbox = ttk.Checkbutton(skip_frame, 
+                                      text="Skip already classified images",
+                                      variable=self.skip_classified)
+        skip_checkbox.grid(row=0, column=0)
+
+        # Folder selection (move to after skip checkbox)
+        folder_frame = ttk.Frame(center_frame)
+        folder_frame.grid(row=3, column=0, pady=10)
 
         select_button = ttk.Button(folder_frame, text="Select Folder", 
                                  command=select_folder_callback, width=15)
@@ -58,7 +70,7 @@ class SetupView(ttk.Frame):
         # Start button
         start_button = ttk.Button(center_frame, text="Start Classification", 
                                 command=start_classification_callback, width=25)
-        start_button.grid(row=3, column=0, pady=20)
+        start_button.grid(row=4, column=0, pady=20)
 
         # Store callbacks
         self.on_add_class = None
